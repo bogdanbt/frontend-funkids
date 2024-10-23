@@ -1,0 +1,44 @@
+.profile-features {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 60px 20px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    max-width: 800px;
+}
+
+.content h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.content ul {
+    list-style-type: none;
+    list-style: none; /* Убираем точки */
+    padding-left: 0; /* Убираем отступ слева */
+}
+
+.content ul li {
+    list-style: none;
+    font-size: 18px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.content ul li i {
+    marker: none;
+    margin-right: 10px;
+    font-size: 24px;
+    color: #7452ff;
+}

@@ -1,3 +1,94 @@
 .App {
-  text-align: center;
+    text-align: center;
+}
+.App {
+    text-align: center;
+}
+
+/* Used by default with NavLink */
+.active {
+    color: lightyellow;
+    text-decoration: none;
+}
+
+.activeLink {
+    color: lightyellow;
+    text-decoration: none;
+}
+
+.courseLink {
+    font-size: 25px;
+    text-decoration: none;
+}
+
+.courseLink:hover {
+    text-decoration: underline;
+}
+
+a {
+    color: lightblue;
+    font-size: 35px;
+}
+
+nav {
+    background-color: darkslategray;
+    padding: 5px;
+}
+
+nav a {
+    margin: 15px;
+}
+
+h1 {
+    font-size: 90px;
+    margin-top: 20px;
+}
+
+button {
+    padding: 15px;
+    font-size: 30px;
+    border-radius: 5px;
+    border: 0;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.navbar {
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-links {
+    display: flex;
+    gap: 15px;
+}
+
+.menu-btn {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #7452ff;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-btn:hover {
+    background-color: #7452ff;
+    color: #fff;
+}
+
+.login-logout-btn {
+    background-color: #ff4ba2;
+    border-color: #ff4ba2;
+}
+
+.login-logout-btn:hover {
+    background-color: #ff2a75;
 }

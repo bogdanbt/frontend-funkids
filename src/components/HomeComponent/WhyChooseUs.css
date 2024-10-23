@@ -1,0 +1,64 @@
+.why-choose-us {
+    background-color: #2d2d2d; /* Тёмный фон секции */
+    color: #fff;
+    padding: 50px 20px;
+    border-radius: 40px; /* Закругляем углы у секции */
+    text-align: center;
+    position: relative; /* Для добавления декоративных элементов */
+}
+
+.why-choose-us h2 {
+    font-size: 36px;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-around;
+}
+
+.card {
+    background-color: #3b3b3b;
+    border-radius: 20px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.card p {
+    font-size: 16px;
+    color: #ccc;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.why-choose-us::before,
+.why-choose-us::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: #ff4ba2;
+    border-radius: 20px;
+    z-index: 1;
+}
+
+.why-choose-us::before {
+    top: -50px;
+    left: -30px;
+}
+
+.why-choose-us::after {
+    bottom: -50px;
+    right: -30px;
+}

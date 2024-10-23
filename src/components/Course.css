@@ -1,0 +1,19 @@
+.course-card {
+    margin: 20px 0; /* Отступы сверху и снизу */
+    border-radius: 10px; /* Закругляем углы карточки */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+    padding: "5rem";
+}
+
+.course-card img {
+    object-fit: cover; /* Изображение обрежется, чтобы заполнить всю область */
+    height: 100%; /* Изображение будет растянуто по высоте карточки */
+    border-radius: 0 10px 10px 0; /* Закругляем только правые углы для изображения */
+}
+
+.course-card .card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрируем текст по вертикали */
+}
