@@ -5,15 +5,18 @@ import axios from "axios";
 import { validateEmail } from "../utils/helper";
 import { Link, useNavigate } from "react-router-dom";
 import config from "../config"; // Импортируем base url serverконфигурацию пример использования `${config.apiBaseUrl}/api/courses`
-
+import { useDispatch } from "react-redux";
+import { setRole } from "../redux/userSlice";
+import { jwtDecode } from "jwt-decode";
 //const ApiUrl = "https://note-app-e82m.onrender.com/";
+
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     const handleLogin = async (e) => {
         e.preventDefault();
 
@@ -38,7 +41,13 @@ const Login = () => {
 
             // Handle successful login response
             if (response.data && response.data.accessToken) {
-                localStorage.setItem("token", response.data.accessToken);
+                const token = response.data.accessToken;
+                localStorage.setItem("token", token);
+                // Декодируем токен и обновляем роль в Redux
+                const decodedToken = jwtDecode(token);
+                dispatch(setRole(decodedToken.role)); // Обновляем роль
+
+                // Перенаправляем пользователя
                 navigate("/profile");
             }
         } catch (error) {

@@ -1,7 +1,7 @@
 import React from "react";
 import "./PopularCourses.css";
 
-// Импортируем изображения для курсов
+// Import images for courses
 import drawingImage from "./images/drawing_course.png";
 import codingImage from "./images/computer_science_course.png";
 import englishImage from "./images/english_course.png";
@@ -10,57 +10,56 @@ import { Link } from "react-router-dom";
 const PopularCourses = () => {
     return (
         <section className="popular-courses">
-            <h2>Популярные курсы</h2>
+            <h2>Popular Courses</h2>
 
             <div className="course-cards">
-                {/* Курс Рисование */}
+                {/* Drawing Course */}
                 <div className="course-card">
                     <img
                         style={{ height: "200px" }}
                         src={drawingImage}
-                        alt="Курс рисования"
+                        alt="Drawing Course"
                         className="course-image"
                     />
-                    <h3>Рисование</h3>
+                    <h3>Drawing</h3>
                     <p>
-                        Освойте основы художественного мастерства, включая
-                        теорию цвета и техники наложения теней.
+                        Learn the basics of artistic skills, including color
+                        theory and shading techniques.
                     </p>
                     <Link to="/allcourses" className="btn course-btn">
                         All courses
                     </Link>
                 </div>
 
-                {/* Курс Информатика */}
+                {/* Computer Science Course */}
                 <div className="course-card">
                     <img
                         style={{ height: "200px" }}
                         src={codingImage}
-                        alt="Курс информатики"
+                        alt="Computer Science Course"
                         className="course-image"
                     />
-                    <h3>Информатика</h3>
+                    <h3>Computer Science</h3>
                     <p>
-                        Создавайте 2D игры и изучайте программирование с самого
-                        раннего возраста.
+                        Create 2D games and learn programming from an early age.
                     </p>
                     <Link to="/allcourses" className="btn course-btn">
                         All courses
                     </Link>
                 </div>
 
-                {/* Курс Английский */}
+                {/* English Language Course */}
                 <div className="course-card">
                     <img
                         style={{ height: "200px" }}
                         src={englishImage}
-                        alt="Курс английского языка"
+                        alt="English Language Course"
                         className="course-image"
                     />
-                    <h3>Английский язык</h3>
+                    <h3>English Language</h3>
                     <p>
-                        Улучшайте словарный запас и развивайте навыки общения на
-                        английском языке.
+                        Improve your vocabulary and develop communication skills
+                        in English.
                     </p>
 
                     <Link to="/allcourses" className="btn course-btn">

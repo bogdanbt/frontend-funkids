@@ -11,18 +11,18 @@ const Home = () => {
             {/* Hero Section */}
             <section className="hero">
                 <div className="hero-content">
-                    <h1>Раскройте потенциал вашего ребенка</h1>
+                    <h1>Unlock your child's potential</h1>
                     <p>
-                        Наш детский клуб предлагает увлекательные и глубокие
-                        занятия для детей от 8 до 15 лет. Программы, основанные
-                        на современных технологиях, помогут вашим детям не
-                        просто узнать базовые вещи, но и детально изучить их,
-                        развивая навыки, которые выделят их среди сверстников.
-                        Курсы по информатике, робототехнике, рисованию,
-                        математике и английскому языку откроют перед вашими
-                        детьми мир новых возможностей и подготовят их к
-                        настоящим профессиональным достижениям. С нами нет
-                        сложных тем – только верный подход и желание учиться!
+                        Our Kids Club offers fun and in-depth activities for
+                        children from 8 to 15 years old. With programmes based
+                        on modern technology, your children won't just learn the
+                        basics, they'll explore them in detail, developing
+                        skills that will set them apart from their peers.
+                        Courses in computer science, robotics, drawing, maths
+                        and English will open up a world of new opportunities
+                        for your children and prepare them for real professional
+                        achievements. There are no complicated topics with us -
+                        just the right approach and a desire to learn!
                     </p>
                     <div className="hero-btns">
                         <Link to="/allcourses" className="btn primary-btn">
@@ -32,12 +32,12 @@ const Home = () => {
                             href="https://www.instagram.com/fun_idea_kids/?igsh=MXFsdXM1OGIyMWlwYg%3D%3D"
                             className="btn secondary-btn"
                         >
-                            Instagramm
+                            Instagram
                         </a>
                     </div>
                 </div>
                 <div className="hero-image">
-                    <img src={heroImage} alt="Ребенок с карандашом" />
+                    <img src={heroImage} alt="" />
                 </div>
             </section>
 

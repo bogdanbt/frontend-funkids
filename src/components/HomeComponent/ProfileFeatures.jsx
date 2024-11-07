@@ -1,25 +1,25 @@
 import React from "react";
-import "./ProfileFeatures.css"; // Подключаем стили для секции
+import "./ProfileFeatures.css"; // Import styles for the section
 
 const ProfileFeatures = () => {
     return (
         <section className="profile-features">
             <div className="content">
-                <h2>Личный кабинет на нашем сайте</h2>
+                <h2>Personal Account on Our Website</h2>
                 <p>
-                    Зарегистрируйтесь на нашем сайте и получите доступ к вашему
-                    личному кабинету, где вы сможете:
+                    Register on our website and gain access to your personal
+                    account, where you can:
                 </p>
-                <p className="icon-clock"></p> Отслеживать время занятий и
-                расписание курсов
-                <p className="icon-payment"></p> Контролировать статус оплаты
-                мастер-классов
-                <p className="icon-bell"></p> Получать важные оповещения и
-                напоминания
+                <p className="icon-clock"></p> Track class times and course
+                schedules
+                <p className="icon-payment"></p> Monitor the payment status of
+                masterclasses
+                <p className="icon-bell"></p> Receive important notifications
+                and reminders
                 <p>
-                    В личном кабинете вы всегда будете в курсе актуальных
-                    новостей и обновлений. Все курсы, на которые вы записаны,
-                    будут отображаться в удобной и структурированной форме.
+                    In your personal account, you will always be aware of the
+                    latest news and updates. All the courses you are enrolled in
+                    will be displayed in a convenient and structured form.
                 </p>
             </div>
         </section>

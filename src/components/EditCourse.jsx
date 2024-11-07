@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import config from "../config"; // Импортируем base url server конфигурацию
+import config from "../config"; // Importing base URL server configuration
 
 function EditCourse() {
     const { courseId } = useParams();
@@ -10,12 +10,12 @@ function EditCourse() {
     const [course, setCourse] = useState({
         title: "",
         description: "",
-        date: "",
+
         foto: "",
     });
 
     useEffect(() => {
-        // Получаем данные о курсе
+        // Fetch course data
         const fetchCourse = async () => {
             try {
                 const response = await axios.get(
@@ -23,7 +23,7 @@ function EditCourse() {
                 );
                 setCourse(response.data);
             } catch (error) {
-                console.error("Ошибка получения курса:", error);
+                console.error("Error fetching course:", error);
             }
         };
 
@@ -52,21 +52,21 @@ function EditCourse() {
             );
 
             if (response.status === 200) {
-                alert("Курс успешно обновлен!");
-                navigate("/allcourses"); // Перенаправляем после успешного обновления
+                alert("Course successfully updated!");
+                navigate("/allcourses"); // Redirect after successful update
             }
         } catch (error) {
-            console.error("Ошибка обновления курса:", error);
-            alert("Ошибка обновления курса. Попробуйте снова.");
+            console.error("Error updating course:", error);
+            alert("Error updating course. Please try again.");
         }
     };
 
     return (
         <div className="container mt-5">
-            <h2>Редактировать курс</h2>
+            <h2>Edit Course</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Название курса:</label>
+                    <label>Course Title:</label>
                     <input
                         type="text"
                         className="form-control"
@@ -77,7 +77,7 @@ function EditCourse() {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Описание:</label>
+                    <label>Description:</label>
                     <textarea
                         name="description"
                         className="form-control"
@@ -86,19 +86,9 @@ function EditCourse() {
                         required
                     ></textarea>
                 </div>
+
                 <div className="form-group">
-                    <label>Дата:</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="date"
-                        value={course.date}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label>URL картинки:</label>
+                    <label>Image URL:</label>
                     <input
                         type="text"
                         className="form-control"
@@ -109,7 +99,7 @@ function EditCourse() {
                     />
                 </div>
                 <button type="submit" className="btn btn-primary mt-3">
-                    Обновить курс
+                    Update Course
                 </button>
             </form>
         </div>

@@ -2,71 +2,75 @@ import React from "react";
 import { Card, Button } from "react-bootstrap";
 import "./Course.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import config from "../config"; // Импортируем base url serverконфигурацию пример использования `${config.apiBaseUrl}/api/courses`
+import { Link, useNavigate } from "react-router-dom";
+import config from "../config"; // Importing base URL server configuration, example usage `${config.apiBaseUrl}/api/courses`
+import { setRole, clearRole } from "../redux/userSlice"; // Экшены из Redux
+import { useSelector } from "react-redux";
 
-const handleRegisterClick = async (courseId, navigate) => {
-    const token = localStorage.getItem("token");
+// import { jwtDecode } from "jwt-decode";
+// const handleRegisterClick = async (courseId, navigate) => {
+//     const token = localStorage.getItem("token");
 
-    if (!token) {
-        // If there's no token, redirect to login page
-        navigate("/login");
-    } else {
-        // If token exists, send a request to register for the course
-        try {
-            const response = await axios.post(
-                `${config.apiBaseUrl}/register-course`,
-                { courseId },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            if (response.status === 200) {
-                alert("You have successfully registered for the course!");
-            }
-        } catch (error) {
-            console.error("Registration error:", error);
-        }
-    }
-};
+//     if (!token) {
+//         // If there's no token, redirect to login page
+//         navigate("/login");
+//     } else {
+//         // If token exists, send a request to register for the course
+//         try {
+//             const response = await axios.post(
+//                 `${config.apiBaseUrl}/register-course`,
+//                 { courseId },
+//                 {
+//                     headers: {
+//                         Authorization: `Bearer ${token}`,
+//                     },
+//                 }
+//             );
+//             if (response.status === 200) {
+//                 alert("You have successfully registered for the course!");
+//             }
+//         } catch (error) {
+//             console.error("Registration error:", error);
+//         }
+//     }
+// };
 
-const handleDeleteClick = async (courseId, removeCourseFromList) => {
-    const token = localStorage.getItem("token");
+// const handleDeleteClick = async (courseId, removeCourseFromList) => {
+//     const token = localStorage.getItem("token");
 
-    try {
-        const response = await axios.delete(
-            `${config.apiBaseUrl}/courses/${courseId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
-        if (response.status === 200) {
-            alert("Курс успешно удален!");
-            removeCourseFromList(courseId); // Удаляем курс из локального состояния
-        }
-    } catch (error) {
-        console.error("Ошибка удаления курса:", error);
-    }
-};
+//     try {
+//         const response = await axios.delete(
+//             `${config.apiBaseUrl}/courses/${courseId}`,
+//             {
+//                 headers: {
+//                     Authorization: `Bearer ${token}`,
+//                 },
+//             }
+//         );
+//         if (response.status === 200) {
+//             alert("Course successfully deleted!");
+//             removeCourseFromList(courseId); // Remove course from local state
+//         }
+//     } catch (error) {
+//         console.error("Error deleting course:", error);
+//     }
+// };
 
-function Course({
-    courseId,
-    title,
-    description,
-    foto,
-    isTeacher,
-    removeCourseFromList,
-    registerButton,
-}) {
+function Course({ courseId, title, description, foto }) {
     const navigate = useNavigate();
+    //const role = useSelector((state) => state.user.role);
+    // const handleEditClick = () => {
+    //     navigate(`/edit-course/${courseId}`);
+    // };
 
-    const handleEditClick = () => {
-        navigate(`/edit-course/${courseId}`);
-    };
+    //const token = localStorage.getItem("token");
+    // let teacherId;
+    // if (token) {
+    //     const decodedToken = jwtDecode(token);
+    //     teacherId = decodedToken.id; // Извлекаем ID учителя из токена
+    // }
+    // console.log(teacherId);
+    // console.log(authorTeacherId);
 
     return (
         <div className="container">
@@ -77,45 +81,8 @@ function Course({
                             <Card.Body>
                                 <Card.Title>{title}</Card.Title>
                                 <Card.Text>{description}</Card.Text>
-                                {registerButton && (
-                                    <Button
-                                        type="button"
-                                        variant="primary"
-                                        onClick={() =>
-                                            handleRegisterClick(
-                                                courseId,
-                                                navigate
-                                            )
-                                        }
-                                    >
-                                        Записаться
-                                    </Button>
-                                )}
-                                {isTeacher && (
-                                    <Button
-                                        type="button"
-                                        variant="secondary"
-                                        onClick={handleEditClick}
-                                        className="ml-2"
-                                    >
-                                        Редактировать
-                                    </Button>
-                                )}
-                                {isTeacher && (
-                                    <Button
-                                        type="button"
-                                        variant="secondary"
-                                        onClick={() =>
-                                            handleDeleteClick(
-                                                courseId,
-                                                removeCourseFromList
-                                            )
-                                        }
-                                        className="ml-2"
-                                    >
-                                        Удалить
-                                    </Button>
-                                )}
+
+                                <Link to={courseId}>More ...</Link>
                             </Card.Body>
                         </div>
                         <div className="col-md-4">
