@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import config from "../config"; // Импорт базового URL для запросов
+import config from "../config";
+import { Button, Form, Alert } from "react-bootstrap";
 
 const ImportLessons = () => {
     const [jsonInput, setJsonInput] = useState("");
@@ -39,31 +40,53 @@ const ImportLessons = () => {
     };
 
     return (
-        <div>
-            <h2>Import Lessons</h2>
-            <p>Enter JSON data for lessons</p>
-            <textarea
-                value={jsonInput}
-                onChange={(e) => setJsonInput(e.target.value)}
-                rows="10"
-                cols="50"
-                placeholder="Paste JSON here"
-            />
-            <button onClick={handleUpload}>Import Lessons</button>
+        <div className="container mt-5 mb-5 d-flex justify-content-center">
+            <div className="w-100" style={{ maxWidth: "600px" }}>
+                <h2 className="text-center mb-4">Import Lessons</h2>
+                <Form.Group controlId="jsonTextarea">
+                    <Form.Label>Enter JSON data for lessons</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={10}
+                        value={jsonInput}
+                        onChange={(e) => setJsonInput(e.target.value)}
+                        placeholder="Paste JSON here"
+                    />
+                </Form.Group>
+                <Button
+                    variant="primary"
+                    onClick={handleUpload}
+                    className="mt-3 w-100"
+                    style={{
+                        display: "block",
+                        margin: "0 auto",
+                        fontSize: "1.1rem",
+                    }}
+                >
+                    Import Lessons
+                </Button>
 
-            {message && <p style={{ color: "green" }}>{message}</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
+                {message && (
+                    <Alert variant="success" className="mt-3 text-center">
+                        {message}
+                    </Alert>
+                )}
+                {error && (
+                    <Alert variant="danger" className="mt-3 text-center">
+                        {error}
+                    </Alert>
+                )}
 
-            {/* Пример JSON ниже */}
-            <h3>Example JSON Format:</h3>
-            <pre
-                style={{
-                    backgroundColor: "#f4f4f4",
-                    padding: "10px",
-                    borderRadius: "5px",
-                }}
-            >
-                {`{
+                <h3 className="mt-4">Example JSON Format:</h3>
+                <pre
+                    style={{
+                        backgroundColor: "#f4f4f4",
+                        padding: "10px",
+                        borderRadius: "5px",
+                        overflowX: "auto",
+                    }}
+                >
+                    {`{
   "lessons": [
     {
       "id": "lesson1",
@@ -87,7 +110,8 @@ const ImportLessons = () => {
     }
   ]
 }`}
-            </pre>
+                </pre>
+            </div>
         </div>
     );
 };

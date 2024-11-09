@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import config from "../config";
-
+import { Table } from "react-bootstrap";
 function ReportsByDate() {
     const [reports, setReports] = useState([]);
     const [startDate, setStartDate] = useState("");
@@ -35,7 +35,7 @@ function ReportsByDate() {
         e.preventDefault();
         fetchReports();
     };
-
+    console.log(reports);
     return (
         <div>
             <h2>Отчеты по диапазону дат</h2>
@@ -66,19 +66,33 @@ function ReportsByDate() {
             </form>
 
             {/* Отображение отчетов */}
-            <ul>
-                {reports.map((report) => (
-                    <li key={report.id}>
-                        <p>
-                            Дата: {new Date(report.date).toLocaleDateString()}
-                        </p>
-                        <p>Курс ID: {report.courseId}</p>
-                        <p>Урок ID: {report.lessonId}</p>
-                        <p>Статус оплаты: {report.paymentStatus}</p>
-                        <p>Сумма: {report.amount}</p>
-                    </li>
-                ))}
-            </ul>
+
+            <Table striped bordered hover responsive className="mt-4">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Course</th>
+                        <th>User</th>
+                        <th>Role</th>
+                        <th>Payment Status</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {reports.map((report) => (
+                        <tr key={report.id}>
+                            <td>
+                                {new Date(report.date).toLocaleDateString()}
+                            </td>
+                            <td>{report.courseTitle}</td>
+                            <td>{report.userFullName}</td>
+                            <td>{report.userRole}</td>
+                            <td>{report.paymentStatus}</td>
+                            <td>{report.amount}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
         </div>
     );
 }

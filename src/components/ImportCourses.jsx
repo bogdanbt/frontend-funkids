@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import config from "../config"; // Adjust path to your config file
+import config from "../config";
 import { Button, Form, Alert } from "react-bootstrap";
 
 function ImportCourses() {
@@ -22,10 +22,10 @@ function ImportCourses() {
 
         try {
             const courses = JSON.parse(jsonInput);
-            console.log("Отправка данных на сервер:", courses);
+            console.log("Sending data to server:", courses);
             const response = await axios.post(
                 `${config.apiBaseUrl}/import-courses`,
-                { courses: courses.courses }, // Передаем массив courses как значение свойства
+                { courses: courses.courses },
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -45,42 +45,53 @@ function ImportCourses() {
     };
 
     return (
-        <div className="container mt-4">
-            <h2>Import Courses</h2>
-            <Form.Group controlId="jsonTextarea">
-                <Form.Label>Enter JSON data for courses</Form.Label>
-                <Form.Control
-                    as="textarea"
-                    rows={15}
-                    value={jsonInput}
-                    onChange={handleJsonInputChange}
-                    placeholder="Paste JSON data here..."
-                />
-            </Form.Group>
-            <Button variant="primary" onClick={handleUpload} className="mt-2">
-                Import Courses
-            </Button>
+        <div className="container mt-5 mb-5 d-flex justify-content-center">
+            <div className="w-100" style={{ maxWidth: "600px" }}>
+                <h2 className="text-center mb-4">Import Courses</h2>
+                <Form.Group controlId="jsonTextarea">
+                    <Form.Label>Enter JSON data for courses</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={10}
+                        value={jsonInput}
+                        onChange={handleJsonInputChange}
+                        placeholder="Paste JSON data here..."
+                    />
+                </Form.Group>
+                <Button
+                    variant="primary"
+                    onClick={handleUpload}
+                    className="mt-3 w-100"
+                    style={{
+                        display: "block",
+                        margin: "0 auto",
+                        fontSize: "1.1rem",
+                    }}
+                >
+                    Import Courses
+                </Button>
 
-            {message && (
-                <Alert variant="success" className="mt-3">
-                    {message}
-                </Alert>
-            )}
-            {error && (
-                <Alert variant="danger" className="mt-3">
-                    {error}
-                </Alert>
-            )}
-            {/* Пример JSON ниже */}
-            <h3>Example JSON Format:</h3>
-            <pre
-                style={{
-                    backgroundColor: "#f4f4f4",
-                    padding: "10px",
-                    borderRadius: "5px",
-                }}
-            >
-                {`{
+                {message && (
+                    <Alert variant="success" className="mt-3 text-center">
+                        {message}
+                    </Alert>
+                )}
+                {error && (
+                    <Alert variant="danger" className="mt-3 text-center">
+                        {error}
+                    </Alert>
+                )}
+
+                <h3 className="mt-4">Example JSON Format:</h3>
+                <pre
+                    style={{
+                        backgroundColor: "#f4f4f4",
+                        padding: "10px",
+                        borderRadius: "5px",
+                        overflowX: "auto",
+                    }}
+                >
+                    {`{
     "courses": [
         {
             "id": "course6",
@@ -102,7 +113,8 @@ function ImportCourses() {
         }
     ]
 }`}
-            </pre>
+                </pre>
+            </div>
         </div>
     );
 }
