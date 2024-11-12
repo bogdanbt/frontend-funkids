@@ -11,10 +11,20 @@ function TeacherProfile({ courses }) {
                     display: "flex",
                     alignItems: "center",
                     gap: "1rem",
+                    flexWrap: "wrap", // Добавлено для адаптивности
+                    padding: "1rem", // Общий отступ для контейнера
                 }}
             >
-                <h2 style={{ padding: "1rem" }}>My Courses</h2>
-                <NavLink className="menu-btn" to="/addcourse">
+                <h2 style={{ margin: 0, fontSize: "1.5rem" }}>My Courses</h2>
+
+                <NavLink
+                    className="btn btn-primary btn-sm"
+                    style={{
+                        padding: "0.5rem 1rem", // Отступы для кнопки
+                        fontSize: "0.875rem", // Адаптивный размер шрифта для кнопки
+                    }}
+                    to="/addcourse"
+                >
                     Add Course
                 </NavLink>
             </div>
@@ -31,9 +41,11 @@ function TeacherProfile({ courses }) {
                     />
                 ))
             ) : (
-                <div className="jumbotron">
-                    <h1 className="display-4">It seems you have no courses</h1>
-                    <p className="lead">
+                <div className="jumbotron text-center">
+                    <h1 className="display-6" style={{ fontSize: "1.25rem" }}>
+                        It seems you have no courses
+                    </h1>
+                    <p className="lead" style={{ fontSize: "1rem" }}>
                         Add your first course to get started.
                     </p>
                 </div>

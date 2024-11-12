@@ -39,16 +39,12 @@ function Profile() {
         fetchCourses();
     }, [role]);
 
-    return (
-        <div className="container">
-            {role === "admin" ? (
-                <AdminProfile /> // Отображаем компонент для администратора
-            ) : role === "teacher" ? (
-                <TeacherProfile courses={courses} />
-            ) : (
-                <StudentProfile courses={courses} />
-            )}
-        </div>
+    return role === "admin" ? (
+        <AdminProfile /> // Отображаем компонент для администратора
+    ) : role === "teacher" ? (
+        <TeacherProfile courses={courses} />
+    ) : (
+        <StudentProfile courses={courses} />
     );
 }
 

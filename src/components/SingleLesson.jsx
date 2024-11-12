@@ -6,6 +6,7 @@ import { Button, Card } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { setRole, clearRole } from "../redux/userSlice";
 import { jwtDecode } from "jwt-decode";
+import Spinner from "./Spinner";
 const { v4: uuidv4 } = require("uuid"); // Импортируем uuid
 function SingleLesson() {
     const { courseId, lessonId } = useParams();
@@ -19,6 +20,7 @@ function SingleLesson() {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(true); // Добавляем состояние загрузки
     let role, userId;
 
     if (token) {
@@ -81,6 +83,8 @@ function SingleLesson() {
                 }
             } catch (error) {
                 console.error("Ошибка при загрузке курса и урока:", error);
+            } finally {
+                setLoading(false); // Устанавливаем загрузку в false после завершения
             }
         };
         fetchCourse();
@@ -178,31 +182,6 @@ function SingleLesson() {
         console.log(`Отмена присутствия для ${studentEmail}`);
     };
 
-    // const handleAttendanceChange = async (studentId, attended) => {
-    //     if (!isEditingAttendance) return;
-    //     setAttendance((prev) => ({ ...prev, [studentId]: attended }));
-
-    //     try {
-    //         if (attended) {
-    //             // Отправляем запрос для добавления отметки о посещении
-    //             await axios.post(
-    //                 `${config.apiBaseUrl}/lessons/${lessonId}/attendance`,
-    //                 { studentId, attended: true },
-    //                 { headers: { Authorization: `Bearer ${token}` } }
-    //             );
-    //         } else {
-    //             // Отправляем запрос для удаления отметки о посещении
-    //             await axios.delete(
-    //                 `${config.apiBaseUrl}/lessons/${lessonId}/attendance/${studentId}`,
-    //                 { headers: { Authorization: `Bearer ${token}` } }
-    //             );
-    //         }
-    //     } catch (error) {
-    //         console.error("Ошибка при обновлении посещаемости:", error);
-    //         alert("Не удалось обновить посещаемость.");
-    //     }
-    // };
-
     const handleDeleteLesson = async () => {
         try {
             const response = await axios.delete(
@@ -219,7 +198,9 @@ function SingleLesson() {
         }
     };
 
-    return lesson ? (
+    return loading ? (
+        <Spinner />
+    ) : (
         <>
             <div className="container pt-3">
                 <div className="row align-items-center">
@@ -336,67 +317,7 @@ function SingleLesson() {
                 )}
             </div>
         </>
-    ) : (
-        <p>Loading lesson data...</p>
     );
 }
-/* <Card className="mt-3">
-                <Card.Img variant="top" src={lesson.photo} alt={lesson.title} />
-                <Card.Body>
-                    <Card.Title>{lesson.title}</Card.Title>
-                    <p>
-                        Количество зарегистрированных детей:{" "}
-                        {course.students.length}
-                    </p>
-                    <Card.Text>{lesson.description}</Card.Text>
-                    <Card.Text>{lesson.content}</Card.Text>
-
-                            <h3 className="mt-4">Отметка посещаемости</h3>
-                          <button
-                                onClick={() =>
-                                    setIsEditingAttendance(!isEditingAttendance)
-                                }
-                                className={`btn ${
-                                    isEditingAttendance
-                                        ? "btn-danger"
-                                        : "btn-primary"
-                                }`}
-                            >
-                                {isEditingAttendance
-                                    ? "Остановить редактирование"
-                                    : "Редактировать посещаемость"}
-                            </button>
-
-                            <ul className="mt-3">
-                                {studentsData.map((student) => (
-                                    <li key={student._id.toString()}>
-                                        {student.fullName}
-                                        <input
-                                            type="checkbox"
-                                            checked={
-                                                attendance[
-                                                    student._id.toString()
-                                                ] || false
-                                            }
-                                            onChange={(e) =>
-                                                handleAttendanceChange(
-                                                    student._id.toString(),
-                                                    e.target.checked
-                                                )
-                                            }
-                                            disabled={!isEditingAttendance} // Чекбоксы отключены, если режим редактирования выключен
-                                        />
-                                    </li>
-                                ))}
-                            </ul>
-                        </>
-                    )}
-                </Card.Body>
-            </Card>
-        </div>
-    ) : (
-        <p>Загрузка данных об уроке...</p>
-    );
-} */
 
 export default SingleLesson;

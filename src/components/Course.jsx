@@ -7,70 +7,8 @@ import config from "../config"; // Importing base URL server configuration, exam
 import { setRole, clearRole } from "../redux/userSlice"; // Экшены из Redux
 import { useSelector } from "react-redux";
 
-// import { jwtDecode } from "jwt-decode";
-// const handleRegisterClick = async (courseId, navigate) => {
-//     const token = localStorage.getItem("token");
-
-//     if (!token) {
-//         // If there's no token, redirect to login page
-//         navigate("/login");
-//     } else {
-//         // If token exists, send a request to register for the course
-//         try {
-//             const response = await axios.post(
-//                 `${config.apiBaseUrl}/register-course`,
-//                 { courseId },
-//                 {
-//                     headers: {
-//                         Authorization: `Bearer ${token}`,
-//                     },
-//                 }
-//             );
-//             if (response.status === 200) {
-//                 alert("You have successfully registered for the course!");
-//             }
-//         } catch (error) {
-//             console.error("Registration error:", error);
-//         }
-//     }
-// };
-
-// const handleDeleteClick = async (courseId, removeCourseFromList) => {
-//     const token = localStorage.getItem("token");
-
-//     try {
-//         const response = await axios.delete(
-//             `${config.apiBaseUrl}/courses/${courseId}`,
-//             {
-//                 headers: {
-//                     Authorization: `Bearer ${token}`,
-//                 },
-//             }
-//         );
-//         if (response.status === 200) {
-//             alert("Course successfully deleted!");
-//             removeCourseFromList(courseId); // Remove course from local state
-//         }
-//     } catch (error) {
-//         console.error("Error deleting course:", error);
-//     }
-// };
-
 function Course({ courseId, title, description, foto }) {
     const navigate = useNavigate();
-    //const role = useSelector((state) => state.user.role);
-    // const handleEditClick = () => {
-    //     navigate(`/edit-course/${courseId}`);
-    // };
-
-    //const token = localStorage.getItem("token");
-    // let teacherId;
-    // if (token) {
-    //     const decodedToken = jwtDecode(token);
-    //     teacherId = decodedToken.id; // Извлекаем ID учителя из токена
-    // }
-    // console.log(teacherId);
-    // console.log(authorTeacherId);
 
     return (
         <div className="container">

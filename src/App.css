@@ -61,6 +61,7 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 0px;
 }
 
 .menu-links {
@@ -68,17 +69,41 @@ button {
     gap: 15px;
 }
 
-.menu-btn {
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #7452ff;
-    border-radius: 20px;
-    padding: 10px 20px;
+/* .menu-btn {
+    color: #333;
+    margin: 0 10px;
     text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #6c63ff; 
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+} */
+.menu-btn {
+    padding: 10px 20px; /* Устанавливаем отступы для единообразия размера */
     font-size: 16px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+    width: 100%; /* Полная ширина на малых экранах */
+    min-width: 120px; /* Фиксированная минимальная ширина */
+    border: 2px solid #6c63ff;
+    border-radius: 20px;
+    margin-left: 0px;
 }
 
+/* Дополнительные медиа-запросы для лучшего масштабирования */
+@media (max-width: 768px) {
+    .menu-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+.shadow-sm {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Настраиваем тень */
+}
 .menu-btn:hover {
     background-color: #7452ff;
     color: #fff;
@@ -103,11 +128,25 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px; /* Добавляем padding, чтобы было пространство по краям на маленьких экранах */
 }
 
 .modal-content {
     background-color: white;
     padding: 20px;
     border-radius: 5px;
-    width: 400px;
+    width: 90%; /* Устанавливаем ширину в процентах для адаптивности */
+    max-width: 400px; /* Ограничение максимальной ширины */
+    max-height: 80vh; /* Ограничение высоты до 80% экрана */
+    overflow-y: auto; /* Включаем прокрутку по вертикали при переполнении */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Добавляем тень для лучшей видимости */
+}
+
+.ms-auto {
+    margin-left: auto !important; /* Привязка Logout к правому краю */
+}
+
+.card:hover {
+    box-shadow: none !important;
+    transform: none !important;
 }

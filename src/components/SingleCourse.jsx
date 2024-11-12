@@ -6,6 +6,7 @@ import { Card, Button } from "react-bootstrap";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { setRole, clearRole } from "../redux/userSlice";
+import Spinner from "./Spinner";
 
 const handleRegisterClick = async (courseId, navigate, userEmail) => {
     const token = localStorage.getItem("token");
@@ -17,7 +18,7 @@ const handleRegisterClick = async (courseId, navigate, userEmail) => {
             const response = await axios.post(
                 `${config.apiBaseUrl}/register-course`,
                 {
-                    email: userEmail, // Передаем email пользователя
+                    email: userEmail, // Pass user email
                     courseId,
                 },
                 {
@@ -35,12 +36,14 @@ const handleRegisterClick = async (courseId, navigate, userEmail) => {
         }
     }
 };
+
 function SingleCourse() {
-    const { courseId } = useParams(); // Используем courseId из URL
+    const { courseId } = useParams(); // Using courseId from URL
     const [course, setCourse] = useState(null);
     const [lessons, setLessons] = useState([]);
     const dispatch = useDispatch();
     const token = localStorage.getItem("token");
+    const [loading, setLoading] = useState(true); // Добавляем состояние загрузки
     const navigate = useNavigate();
     let userId, role, userEmail;
 
@@ -49,17 +52,17 @@ function SingleCourse() {
             const decodedToken = jwtDecode(token);
             userId = decodedToken.id;
             role = decodedToken.role;
-            userEmail = decodedToken.email; // Получаем email из токена
+            userEmail = decodedToken.email; // Get email from token
 
             if (decodedToken.exp * 1000 > Date.now()) {
                 dispatch(setRole(role));
             } else {
                 localStorage.removeItem("token");
                 dispatch(clearRole());
-                alert("Время действия токена истекло, выполните вход снова.");
+                alert("Token has expired, please log in again.");
             }
         } catch (error) {
-            console.error("Ошибка декодирования токена:", error);
+            console.error("Token decoding error:", error);
             localStorage.removeItem("token");
             dispatch(clearRole());
         }
@@ -72,9 +75,11 @@ function SingleCourse() {
                     `${config.apiBaseUrl}/courses/${courseId}`
                 );
                 setCourse(response.data);
-                setLessons(response.data.lessons); // Получаем уроки из ответа
+                setLessons(response.data.lessons); // Get lessons from response
             } catch (error) {
-                console.error("Ошибка при загрузке курса:", error);
+                console.error("Error loading course:", error);
+            } finally {
+                setLoading(false); // Отключаем состояние загрузки после завершения
             }
         };
 
@@ -85,14 +90,14 @@ function SingleCourse() {
 
     const onDelete = async () => {
         if (!token) {
-            alert("Вы должны войти в систему, чтобы удалить курс.");
+            alert("You must log in to delete the course.");
             navigate("/login");
             return;
         }
 
         try {
             const response = await axios.delete(
-                `${config.apiBaseUrl}/courses/${courseId}`, // Используем courseId
+                `${config.apiBaseUrl}/courses/${courseId}`, // Using courseId
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -101,12 +106,12 @@ function SingleCourse() {
             );
 
             if (response.status === 200) {
-                alert("Курс успешно удален.");
+                alert("Course successfully deleted.");
                 navigate("/allcourses");
             }
         } catch (error) {
-            console.error("Ошибка при удалении курса:", error);
-            alert("Не удалось удалить курс.");
+            console.error("Error deleting course:", error);
+            alert("Failed to delete course.");
         }
     };
 
@@ -114,12 +119,12 @@ function SingleCourse() {
         navigate(`/edit-course/${courseId}`);
     };
 
-    //модальное окно для админа
+    // Modal window for admin
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [students, setStudents] = useState([]);
     const [selectedStudents, setSelectedStudents] = useState([]);
 
-    // Функция для получения списка студентов при открытии модального окна
+    // Function to get the list of students when opening the modal window
     const openModal = async () => {
         setIsModalOpen(true);
         try {
@@ -129,13 +134,13 @@ function SingleCourse() {
             setStudents(response.data);
             console.log(response.data);
         } catch (error) {
-            console.error("Ошибка при получении списка студентов:", error);
+            console.error("Error getting student list:", error);
         }
     };
 
     const closeModal = () => {
         setIsModalOpen(false);
-        setSelectedStudents([]); // Очистка выбранных студентов при закрытии
+        setSelectedStudents([]); // Clear selected students when closing
     };
 
     const handleStudentSelect = (studentId) => {
@@ -146,111 +151,99 @@ function SingleCourse() {
                     ? prevSelected.filter((email) => email !== student.email)
                     : [...prevSelected, student.email]
             );
-            console.log(
-                "Текущий список выбранных студентов:",
-                selectedStudents
-            ); // Отладка
+            console.log("Current list of selected students:", selectedStudents); // Debug
         }
     };
 
-    // const handleSubmit = async () => {
-    //     try {
-    //         await axios.post(
-    //             `${config.apiBaseUrl}/courses/${courseId}/add-students`,
-    //             {
-    //                 studentIds: selectedStudents,
-    //             }
-    //         );
-    //         alert("Студенты успешно добавлены на курс");
-    //         closeModal();
-    //     } catch (error) {
-    //         console.error("Ошибка при добавлении студентов на курс:", error);
-    //     }
-    // };
     const handleSubmit = async () => {
         try {
-            console.log("Отправка studentEmails на сервер:", selectedStudents); // Отладка
+            console.log("Sending studentEmails to server:", selectedStudents); // Debug
             await axios.post(
                 `${config.apiBaseUrl}/courses/${courseId}/add-students`,
                 {
-                    studentIds: selectedStudents, // Передаем массив email студентов напрямую
+                    studentIds: selectedStudents, // Pass array of student emails directly
                 }
             );
-            alert("Студенты успешно добавлены на курс");
+            alert("Students successfully added to the course");
             closeModal();
         } catch (error) {
-            console.error("Ошибка при добавлении студентов на курс:", error);
+            console.error("Error adding students to course:", error);
         }
     };
-    return course ? (
-        <>
-            <div className="container pt-3">
-                <div className="row align-items-center">
-                    <div className="col-md-8">
-                        <h2>{course.title}</h2>
-                        <p>{course.description}</p>
 
-                        {(role === "admin" ||
-                            (role === "teacher" &&
-                                userId === course.teacherId)) && (
-                            <div className="d-flex">
-                                <Button
-                                    variant="secondary"
-                                    onClick={onEdit}
-                                    className="ml-2"
-                                >
-                                    Edit course
-                                </Button>
-                                <Button
-                                    variant="danger"
-                                    onClick={onDelete}
-                                    className="ml-2"
-                                >
-                                    Delete course
-                                </Button>
-                                <Button
-                                    variant="danger"
-                                    onClick={openModal}
-                                    className="ml-2"
-                                >
-                                    Add students to course
-                                </Button>
-                                <Link to={`/allcourses/${courseId}/addlesson`}>
-                                    <Button variant="primary" className="ml-2">
-                                        Add lesson
-                                    </Button>
-                                </Link>
-                            </div>
-                        )}
-                        {role !== "teacher" && role !== "admin" && (
+    return loading ? (
+        <Spinner />
+    ) : (
+        <div className="container pt-3">
+            <div className="row align-items-center">
+                <div className="col-12 col-md-8">
+                    <h2>{course.title}</h2>
+                    <p>{course.description}</p>
+
+                    {(role === "admin" ||
+                        (role === "teacher" &&
+                            userId === course.teacherId)) && (
+                        <div className="d-flex flex-wrap">
                             <Button
-                                variant="primary"
-                                onClick={() =>
-                                    handleRegisterClick(
-                                        courseId,
-                                        navigate,
-                                        userEmail
-                                    )
-                                }
-                                className="ml-2"
+                                variant="secondary"
+                                onClick={onEdit}
+                                className="mb-2 me-2 btn-sm"
                             >
-                                Registration
+                                Edit course
                             </Button>
-                        )}
-                    </div>
-                    <div className="col-md-4">
-                        <img
-                            src={course.foto}
-                            alt="Описание изображения"
-                            className="img-fluid"
-                        />
-                    </div>
+                            <Button
+                                variant="danger"
+                                onClick={onDelete}
+                                className="mb-2 me-2 btn-sm"
+                            >
+                                Delete course
+                            </Button>
+                            <Button
+                                variant="danger"
+                                onClick={openModal}
+                                className="mb-2 me-2 btn-sm"
+                            >
+                                Add students to course
+                            </Button>
+                            <Link to={`/allcourses/${courseId}/addlesson`}>
+                                <Button
+                                    variant="primary"
+                                    className="mb-2 me-2 btn-sm"
+                                >
+                                    Add lesson
+                                </Button>
+                            </Link>
+                        </div>
+                    )}
+                    {role !== "teacher" && role !== "admin" && (
+                        <Button
+                            variant="primary"
+                            onClick={() =>
+                                handleRegisterClick(
+                                    courseId,
+                                    navigate,
+                                    userEmail
+                                )
+                            }
+                            className="mb-2 btn-sm"
+                        >
+                            Registration
+                        </Button>
+                    )}
+                </div>
+                <div className="col-md-4 align-items-center">
+                    <img
+                        src={course.foto}
+                        alt="Image description"
+                        className="img-fluid rounded"
+                    />
                 </div>
             </div>
+
             {isModalOpen && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h3>Выберите студентов</h3>
+                        <h3>Select students</h3>
                         <ul>
                             {students.map((student) => (
                                 <li key={student._id}>
@@ -268,15 +261,15 @@ function SingleCourse() {
                             ))}
                         </ul>
                         <button onClick={handleSubmit}>
-                            Добавить выбранных студентов
+                            Add selected students
                         </button>
-                        <button onClick={closeModal}>Отмена</button>
+                        <button onClick={closeModal}>Cancel</button>
                     </div>
                 </div>
             )}
-            <div>
-                <h2 className="mb-4 text-center">Уроки</h2>
 
+            <div>
+                <h2 className="mb-4 text-center">Lessons</h2>
                 <div className="d-flex flex-wrap justify-content-center gap-4">
                     {lessons.map((lesson) => (
                         <Card
@@ -322,10 +315,7 @@ function SingleCourse() {
                     ))}
                 </div>
             </div>
-        </>
-    ) : (
-        <p>Loading course data...</p>
+        </div>
     );
 }
-
 export default SingleCourse;

@@ -38,31 +38,44 @@ function ReportsByDate() {
     console.log(reports);
     return (
         <div>
-            <h2>Отчеты по диапазону дат</h2>
+            <h2 className="text-center">Reports by Date Range</h2>
 
-            {/* Форма для ввода дат */}
+            {/* Date range input form */}
             <form onSubmit={handleSubmit} className="mb-4">
-                <label>
-                    Начальная дата:
+                <div className="d-flex flex-column flex-md-row align-items-center justify-content-center">
+                    <label className="mr-md-2 mb-2 mb-md-0">Start Date:</label>
                     <input
                         type="date"
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
                         required
+                        className="form-control mt-1"
+                        style={{
+                            width: "100%",
+                            maxWidth: "200px",
+                        }}
                     />
-                </label>
-                <label className="ml-2">
-                    Конечная дата:
+                    <label className="mx-md-2 mb-2 mb-md-0">End Date:</label>
                     <input
                         type="date"
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
                         required
+                        className="form-control mt-1"
+                        style={{
+                            width: "100%",
+                            maxWidth: "200px",
+                        }}
                     />
-                </label>
-                <button type="submit" className="btn btn-primary ml-2">
-                    Показать отчеты
-                </button>
+                    <div className="mt-4">
+                        <button
+                            type="submit"
+                            className="btn btn-primary  mt-md-0 ml-md-3 "
+                        >
+                            Show Reports
+                        </button>
+                    </div>
+                </div>
             </form>
 
             {/* Отображение отчетов */}

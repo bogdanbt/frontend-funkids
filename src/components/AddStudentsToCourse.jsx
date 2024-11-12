@@ -47,7 +47,14 @@ function AddStudentsToCourse({ courseId }) {
                 Добавить студентов
             </button>
             {showModal && (
-                <div className="modal">
+                <div
+                    className="modal"
+                    style={{
+                        maxHeight: "80vh", // Ограничиваем высоту окна
+                        overflowY: "auto", // Включаем вертикальную прокрутку при необходимости
+                        padding: "1rem",
+                    }}
+                >
                     <h3>Выберите студентов</h3>
                     <ul>
                         {students.map((student) => (
@@ -65,10 +72,20 @@ function AddStudentsToCourse({ courseId }) {
                             </li>
                         ))}
                     </ul>
-                    <button onClick={handleSubmit}>
-                        Добавить выбранных студентов
-                    </button>
-                    <button onClick={() => setShowModal(false)}>Отмена</button>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "0.5rem",
+                        }}
+                    >
+                        <button onClick={handleSubmit}>
+                            Добавить выбранных студентов
+                        </button>
+                        <button onClick={() => setShowModal(false)}>
+                            Отмена
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
